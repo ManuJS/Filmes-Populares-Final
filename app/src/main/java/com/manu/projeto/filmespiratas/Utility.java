@@ -5,9 +5,6 @@ import android.database.Cursor;
 
 import com.manu.projeto.filmespiratas.data.MovieContract;
 
-/**
- * Created by Ismael on 15/06/2015.
- */
 public class Utility {
 
     public static int isFavorited(Context context, int id) {

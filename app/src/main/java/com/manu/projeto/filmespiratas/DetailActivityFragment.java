@@ -59,6 +59,7 @@ public class DetailActivityFragment extends Fragment {
     private Filme mMovie;
 
     private ImageView mImageView;
+    private ImageView mImageViewP;
 
     private TextView mTitleView;
     private TextView mOverviewView;
@@ -226,6 +227,7 @@ public class DetailActivityFragment extends Fragment {
             mDetailLayout.setVisibility(View.INVISIBLE);
         }
 
+        mImageViewP = (ImageView) rootView.findViewById(R.id.img_back_drop_path);
         mImageView = (ImageView) rootView.findViewById(R.id.image_cartaz);
 
         mTitleView = (TextView) rootView.findViewById(R.id.txtTitulo);
@@ -258,13 +260,14 @@ public class DetailActivityFragment extends Fragment {
 
         if (mMovie != null) {
 
-            String image_url = Utility.buildImageUrl(500, mMovie.getImage());
+            String image_url1 = Utility.buildImageUrl(500, mMovie.getImage2());
+            Picasso.with(getContext()).load(image_url1).into(mImageViewP);
 
+            String image_url = Utility.buildImageUrl(500, mMovie.getImage());
             Picasso.with(getContext()).load(image_url).into(mImageView);
 
             mTitleView.setText(mMovie.getTitle());
             mOverviewView.setText(mMovie.getOverview());
-
             String movie_date = mMovie.getDate();
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -276,7 +279,7 @@ public class DetailActivityFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            mVoteAverageView.setText(Integer.toString(mMovie.getRating()));
+            mVoteAverageView.setText(mMovie.getRating());
         }
 
         return rootView;
@@ -312,7 +315,6 @@ public class DetailActivityFragment extends Fragment {
 
             for(int i = 0; i < trailerArray.length(); i++) {
                 JSONObject trailer = trailerArray.getJSONObject(i);
-                // Only show Trailers which are on Youtube
                 if (trailer.getString("site").contentEquals("YouTube")) {
                     Trailer trailerModel = new Trailer(trailer);
                     results.add(trailerModel);
@@ -357,9 +359,7 @@ public class DetailActivityFragment extends Fragment {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
+
                     buffer.append(line + "\n");
                 }
 
@@ -389,8 +389,6 @@ public class DetailActivityFragment extends Fragment {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
             }
-
-            // This will only happen if there was an error getting or parsing the forecast.
             return null;
         }
 

@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.manu.projeto.filmespiratas.adapters.MovieGridAdapter;
+import com.manu.projeto.filmespiratas.adapters.FilmesGridAdapter;
 import com.manu.projeto.filmespiratas.data.MovieContract;
 import com.manu.projeto.filmespiratas.model.Filme;
 
@@ -43,7 +43,7 @@ public class MainActivityFragment extends Fragment {
 
     private GridView mGridView;
 
-    private MovieGridAdapter mMovieGridAdapter;
+    private FilmesGridAdapter mFilmesGridAdapter;
     private static final String POPULARITY_DESC = "popular";
     private static final String RATING_DESC = "top_rated";
     private static final String FAVORITE =  "favorite";
@@ -159,14 +159,14 @@ public class MainActivityFragment extends Fragment {
 
         mGridView = (GridView) view.findViewById(R.id.gridview_movies);
 
-        mMovieGridAdapter = new MovieGridAdapter(getActivity(), new ArrayList<Filme>());
+        mFilmesGridAdapter = new FilmesGridAdapter(getActivity(), new ArrayList<Filme>());
 
-        mGridView.setAdapter(mMovieGridAdapter);
+        mGridView.setAdapter(mFilmesGridAdapter);
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Filme movie = mMovieGridAdapter.getItem(position);
+                Filme movie = mFilmesGridAdapter.getItem(position);
                 ((Callback) getActivity()).onItemSelected(movie);
             }
         });
@@ -178,7 +178,7 @@ public class MainActivityFragment extends Fragment {
 
             if (savedInstanceState.containsKey(MOVIES_KEY)) {
                 mMovies = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
-                mMovieGridAdapter.setData(mMovies);
+                mFilmesGridAdapter.setData(mMovies);
             } else {
                 updateMovies(mSortBy);
             }
@@ -305,8 +305,8 @@ public class MainActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Filme> movies) {
             if (movies != null) {
-                if (mMovieGridAdapter != null) {
-                    mMovieGridAdapter.setData(movies);
+                if (mFilmesGridAdapter != null) {
+                    mFilmesGridAdapter.setData(movies);
                 }
                 mMovies = new ArrayList<>();
                 mMovies.addAll(movies);
@@ -349,8 +349,8 @@ public class MainActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Filme> movies) {
             if (movies != null) {
-                if (mMovieGridAdapter != null) {
-                    mMovieGridAdapter.setData(movies);
+                if (mFilmesGridAdapter != null) {
+                    mFilmesGridAdapter.setData(movies);
                 }
                 mMovies = new ArrayList<>();
                 mMovies.addAll(movies);

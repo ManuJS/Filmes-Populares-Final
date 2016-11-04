@@ -15,7 +15,7 @@
     <string name="pref_classificacao_default" translatable="false">top_rated</string>
     <string name="busca">Classificação</string>
     <string name="title_activity_detail_Filme">Detalhes do filme</string>
-    <string name="trailers">Trailers</string>
+
 
     <!--sao os nomes que vao para a lista de opçoes-->
     <string name="pref_mais_votados">Mais votados</string>
@@ -27,10 +27,13 @@
     <string name="texto_sinopse">Sinopse do filme </string>
     <string name="titulo">Titulo</string>
     <string name="data_lan_amento">Data lançamento</string>
+    <string name="media_de_votos">Média de votos</string>
+    <string name="trailers">Trailers</string>
+
     <string name="votos">Votos</string>
     <string name="msg_server_error">Não há conexão com o servidor</string>
     <string name="msg_nao_ha_dados">Não existem dados</string>
-    <string name="tmdb_api_key">Insira sua chave de API aqui</string>
+    <string name="tmdb_api_key" translatable="false">Insira sua chave de Api aqui</string>
     <string name="content_authority">com.manu.projeto.filmespiratas</string>
     <string name="text_favarite_Filme">ImageButton (selector) is clicked!</string>
     <string name="removed_from_favorites">Filme removido da lista de favoritos!</string>
@@ -40,7 +43,7 @@
     <string name="cartaz">cartaz</string>
     <string name="action_sort_by">Sort by</string>
     <string name="lista_de_trailers_horizontal">Lista de trailers horizontal</string>
-    <string name="reviews">reviews</string>
+    <string name="reviews">Reviews</string>
     <string name="poster_do_filme">poster do filme</string>
 
 </resources>

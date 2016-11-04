@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.manu.projeto.filmespiratas.R;
+import com.manu.projeto.filmespiratas.data.MovieContract;
 import com.manu.projeto.filmespiratas.model.Filme;
 import com.squareup.picasso.Picasso;
 
@@ -18,14 +19,14 @@ import java.util.List;
 /**
  * Created by emanu on 01/11/2016.
  */
-public class MovieGridAdapter extends BaseAdapter {
+public class FilmesGridAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final Filme mLock = new Filme();
 
     private List<Filme> mObjects;
     private final LayoutInflater mInflater;
-    public MovieGridAdapter(Context context, List<Filme> objects) {
+    public FilmesGridAdapter(Context context, List<Filme> objects) {
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mObjects = objects;
@@ -90,7 +91,6 @@ public class MovieGridAdapter extends BaseAdapter {
 
         Picasso.with(getContext()).load(image_url)
                 .into(viewHolder.imageView);
-
 
         return view;
     }
