@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas.model;
+package com.manu.projeto.filmespopulares.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;

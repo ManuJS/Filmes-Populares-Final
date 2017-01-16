@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas.data;
+package com.manu.projeto.filmespopulares.data;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
  * Created by emanu on 01/11/2016.
  */
 public class MovieContract {
-    public static final String CONTENT_AUTHORITY = "com.manu.projeto.filmespiratas";
+    public static final String CONTENT_AUTHORITY = "com.manu.projeto.filmespopulares";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 

@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas.adapters;
+package com.manu.projeto.filmespopulares.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.manu.projeto.filmespiratas.R;
-import com.manu.projeto.filmespiratas.model.Trailer;
+import com.manu.projeto.filmespopulares.R;
+import com.manu.projeto.filmespopulares.model.Trailer;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

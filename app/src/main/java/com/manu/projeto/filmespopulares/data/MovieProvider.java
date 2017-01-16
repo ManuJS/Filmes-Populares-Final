@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas.data;
+package com.manu.projeto.filmespopulares.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

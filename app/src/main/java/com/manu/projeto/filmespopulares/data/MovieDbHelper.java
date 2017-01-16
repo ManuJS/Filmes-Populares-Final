@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas.data;
+package com.manu.projeto.filmespopulares.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

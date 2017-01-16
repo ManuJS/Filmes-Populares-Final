@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "224708901282",
+    "firebase_url": "https://filmes-piratas.firebaseio.com",
+    "project_id": "filmes-piratas",
+    "storage_bucket": "filmes-piratas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224708901282:android:6afc024cf785bb1e",
+        "android_client_info": {
+          "package_name": "com.manu.projeto.filmespiratas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224708901282-r1c2q1tmvj1u3j2mop3bh24sdi5nk5bf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFgjNFC5segmtfXl-iBTbtEXUEevr6NIk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,9 +1,9 @@
-package com.manu.projeto.filmespiratas;
+package com.manu.projeto.filmespopulares;
 
 import android.content.Context;
 import android.database.Cursor;
 
-import com.manu.projeto.filmespiratas.data.MovieContract;
+import com.manu.projeto.filmespopulares.data.MovieContract;
 
 public class Utility {
 

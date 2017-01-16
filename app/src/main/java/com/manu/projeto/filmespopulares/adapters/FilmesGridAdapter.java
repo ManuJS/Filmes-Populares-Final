@@ -1,30 +1,32 @@
-package com.manu.projeto.filmespiratas.adapters;
+package com.manu.projeto.filmespopulares.adapters;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.manu.projeto.filmespiratas.R;
-import com.manu.projeto.filmespiratas.model.Review;
+
+import com.manu.projeto.filmespopulares.R;
+import com.manu.projeto.filmespopulares.data.MovieContract;
+import com.manu.projeto.filmespopulares.model.Filme;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 /**
  * Created by emanu on 01/11/2016.
  */
-public class ReviewAdapter extends BaseAdapter {
+public class FilmesGridAdapter extends BaseAdapter {
 
     private final Context mContext;
+    private final Filme mLock = new Filme();
+
+    private List<Filme> mObjects;
     private final LayoutInflater mInflater;
-    private final Review mLock = new Review();
-
-    private List<Review> mObjects;
-
-    public ReviewAdapter(Context context, List<Review> objects) {
+    public FilmesGridAdapter(Context context, List<Filme> objects) {
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mObjects = objects;
@@ -34,7 +36,7 @@ public class ReviewAdapter extends BaseAdapter {
         return mContext;
     }
 
-    public void add(Review object) {
+    public void add(Filme object) {
         synchronized (mLock) {
             mObjects.add(object);
         }
@@ -48,13 +50,20 @@ public class ReviewAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setData(List<Filme> data) {
+        clear();
+        for (Filme filme : data) {
+            add(filme);
+        }
+    }
+
     @Override
     public int getCount() {
         return mObjects.size();
     }
 
     @Override
-    public Review getItem(int position) {
+    public Filme getItem(int position) {
         return mObjects.get(position);
     }
 
@@ -69,29 +78,31 @@ public class ReviewAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (view == null) {
-            view = mInflater.inflate(R.layout.item_movie_review, parent, false);
+            view = mInflater.inflate(R.layout.grid_item_movie, parent, false);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         }
 
-        final Review review = getItem(position);
+        final Filme filme = getItem(position);
+
+        String image_url = "http://image.tmdb.org/t/p/w500" + filme.getImage();
 
         viewHolder = (ViewHolder) view.getTag();
 
-        viewHolder.authorView.setText(review.getAuthor());
-        viewHolder.contentView.setText(Html.fromHtml(review.getContent()));
+        Picasso.with(getContext()).load(image_url)
+                .into(viewHolder.imageView);
 
         return view;
     }
 
     public static class ViewHolder {
-        public final TextView authorView;
-        public final TextView contentView;
+        public final ImageView imageView;
+
 
         public ViewHolder(View view) {
-            authorView = (TextView) view.findViewById(R.id.review_author);
-            contentView = (TextView) view.findViewById(R.id.review_content);
+            imageView = (ImageView) view.findViewById(R.id.grid_item_image);
+
+
         }
     }
-
 }

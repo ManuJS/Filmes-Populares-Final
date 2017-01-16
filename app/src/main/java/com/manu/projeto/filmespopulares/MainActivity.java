@@ -1,19 +1,24 @@
-package com.manu.projeto.filmespiratas;
+package com.manu.projeto.filmespopulares;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.manu.projeto.filmespiratas.model.Filme;
+import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.crash.FirebaseCrash.*;
+import com.manu.projeto.filmespopulares.model.Filme;
 
 
 public class MainActivity extends AppCompatActivity implements MainActivityFragment.Callback {
 
     private boolean mTwoPane;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // FirebaseCrash.report(new Exception("My first Android non-fatal error"));
+
         setContentView(R.layout.activity_main);
 
         if (findViewById(R.id.movie_detail_container) != null) {
@@ -30,10 +35,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
     }
 
     @Override
-    public void onItemSelected(Filme movie) {
+    public void onItemSelected(Filme filme) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putParcelable(DetailActivityFragment.DETAIL_MOVIE, movie);
+            arguments.putParcelable(DetailActivityFragment.DETAIL_MOVIE, filme);
 
             DetailActivityFragment fragment = new DetailActivityFragment();
             fragment.setArguments(arguments);
@@ -43,9 +48,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
                     .commit();
         } else {
             Intent intent = new Intent(this, DetailActivity.class)
-                    .putExtra(DetailActivityFragment.DETAIL_MOVIE, movie);
+                    .putExtra(DetailActivityFragment.DETAIL_MOVIE, filme);
             startActivity(intent);
         }
     }
+
+
 
 }

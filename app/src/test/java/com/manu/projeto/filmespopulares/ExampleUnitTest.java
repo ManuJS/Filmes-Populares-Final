@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas;
+package com.manu.projeto.filmespopulares;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas;
+package com.manu.projeto.filmespopulares;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -22,12 +22,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manu.projeto.filmespiratas.adapters.ReviewAdapter;
-import com.manu.projeto.filmespiratas.adapters.TrailerAdapter;
-import com.manu.projeto.filmespiratas.data.MovieContract;
-import com.manu.projeto.filmespiratas.model.Filme;
-import com.manu.projeto.filmespiratas.model.Review;
-import com.manu.projeto.filmespiratas.model.Trailer;
+import com.manu.projeto.filmespopulares.adapters.ReviewAdapter;
+import com.manu.projeto.filmespopulares.adapters.TrailerAdapter;
+import com.manu.projeto.filmespopulares.data.MovieContract;
+import com.manu.projeto.filmespopulares.model.Filme;
+import com.manu.projeto.filmespopulares.model.Review;
+import com.manu.projeto.filmespopulares.model.Trailer;
 import com.linearlistview.LinearListView;
 import com.squareup.picasso.Picasso;
 
@@ -56,14 +56,15 @@ public class DetailActivityFragment extends Fragment {
 
     static final String DETAIL_MOVIE = "DETAIL_MOVIE";
 
-    private Filme mMovie;
+    private Filme mFilme;
+    private Trailer mTrailer;
 
     private ImageView mImageView;
     private ImageView mImageViewP;
 
-    private TextView mTitleView;
-    private TextView mOverviewView;
-    private TextView mDateView;
+    private TextView mTitulo;
+    private TextView mSinopse;
+    private TextView mDataLancamento;
     private TextView mVoteAverageView;
 
     private LinearListView mTrailersView;
@@ -81,8 +82,7 @@ public class DetailActivityFragment extends Fragment {
 
     private ShareActionProvider mShareActionProvider;
 
-    // the first trailer video to share
-    private Trailer mTrailer;
+
 
     public DetailActivityFragment() {
     }
@@ -95,20 +95,16 @@ public class DetailActivityFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (mMovie != null) {
+        if (mFilme != null) {
             inflater.inflate(R.menu.menu_fragment_detail, menu);
 
             final MenuItem action_favorite = menu.findItem(R.id.action_favorite);
             MenuItem action_share = menu.findItem(R.id.action_share);
-            /*
-            action_favorite.setIcon(Utility.isFavorited(getActivity(), mMovie.getId()) == 1 ?
-                    R.drawable.abc_btn_rating_star_on_mtrl_alpha :
-                    R.drawable.abc_btn_rating_star_off_mtrl_alpha);
-            */
+
             new AsyncTask<Void, Void, Integer>() {
                 @Override
                 protected Integer doInBackground(Void... params) {
-                    return Utility.isFavorited(getActivity(), mMovie.getId());
+                    return Utility.isFavorited(getActivity(), mFilme.getId());
                 }
 
                 @Override
@@ -132,13 +128,13 @@ public class DetailActivityFragment extends Fragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_favorite:
-                if (mMovie != null) {
+                if (mFilme != null) {
                     // check if movie is in favorites or not
                     new AsyncTask<Void, Void, Integer>() {
 
                         @Override
                         protected Integer doInBackground(Void... params) {
-                            return Utility.isFavorited(getActivity(), mMovie.getId());
+                            return Utility.isFavorited(getActivity(), mFilme.getId());
                         }
 
                         @Override
@@ -152,7 +148,7 @@ public class DetailActivityFragment extends Fragment {
                                         return getActivity().getContentResolver().delete(
                                                 MovieContract.MovieEntry.CONTENT_URI,
                                                 MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ?",
-                                                new String[]{Integer.toString(mMovie.getId())}
+                                                new String[]{Integer.toString(mFilme.getId())}
                                         );
                                     }
 
@@ -175,13 +171,13 @@ public class DetailActivityFragment extends Fragment {
                                     protected Uri doInBackground(Void... params) {
                                         ContentValues values = new ContentValues();
 
-                                        values.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID, mMovie.getId());
-                                        values.put(MovieContract.MovieEntry.COLUMN_TITLE, mMovie.getTitle());
-                                        values.put(MovieContract.MovieEntry.COLUMN_IMAGE, mMovie.getImage());
-                                        values.put(MovieContract.MovieEntry.COLUMN_IMAGE2, mMovie.getImage2());
-                                        values.put(MovieContract.MovieEntry.COLUMN_OVERVIEW, mMovie.getOverview());
-                                        values.put(MovieContract.MovieEntry.COLUMN_RATING, mMovie.getRating());
-                                        values.put(MovieContract.MovieEntry.COLUMN_DATE, mMovie.getDate());
+                                        values.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID, mFilme.getId());
+                                        values.put(MovieContract.MovieEntry.COLUMN_TITLE, mFilme.getTitle());
+                                        values.put(MovieContract.MovieEntry.COLUMN_IMAGE, mFilme.getImage());
+                                        values.put(MovieContract.MovieEntry.COLUMN_IMAGE2, mFilme.getImage2());
+                                        values.put(MovieContract.MovieEntry.COLUMN_OVERVIEW, mFilme.getOverview());
+                                        values.put(MovieContract.MovieEntry.COLUMN_RATING, mFilme.getRating());
+                                        values.put(MovieContract.MovieEntry.COLUMN_DATE, mFilme.getDate());
 
                                         return getActivity().getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI,
                                                 values);
@@ -214,14 +210,14 @@ public class DetailActivityFragment extends Fragment {
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mMovie = arguments.getParcelable(DetailActivityFragment.DETAIL_MOVIE);
+            mFilme = arguments.getParcelable(DetailActivityFragment.DETAIL_MOVIE);
         }
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
         mDetailLayout = (ScrollView) rootView.findViewById(R.id.detail_layout);
 
-        if (mMovie != null) {
+        if (mFilme != null) {
             mDetailLayout.setVisibility(View.VISIBLE);
         } else {
             mDetailLayout.setVisibility(View.INVISIBLE);
@@ -230,9 +226,9 @@ public class DetailActivityFragment extends Fragment {
         mImageViewP = (ImageView) rootView.findViewById(R.id.img_back_drop_path);
         mImageView = (ImageView) rootView.findViewById(R.id.image_cartaz);
 
-        mTitleView = (TextView) rootView.findViewById(R.id.txtTitulo);
-        mOverviewView = (TextView) rootView.findViewById(R.id.txtSinopse);
-        mDateView = (TextView) rootView.findViewById(R.id.txtDataLancamento);
+        mTitulo = (TextView) rootView.findViewById(R.id.txtTitulo);
+        mSinopse = (TextView) rootView.findViewById(R.id.txtSinopse);
+        mDataLancamento = (TextView) rootView.findViewById(R.id.txtDataLancamento);
         mVoteAverageView = (TextView) rootView.findViewById(R.id.txtQtdVotos);
 
         mTrailersView = (LinearListView) rootView.findViewById(R.id.detail_trailers);
@@ -258,28 +254,28 @@ public class DetailActivityFragment extends Fragment {
         mReviewAdapter = new ReviewAdapter(getActivity(), new ArrayList<Review>());
         mReviewsView.setAdapter(mReviewAdapter);
 
-        if (mMovie != null) {
+        if (mFilme != null) {
 
-            String image_url1 = Utility.buildImageUrl(500, mMovie.getImage2());
+            String image_url1 = Utility.buildImageUrl(500, mFilme.getImage2());
             Picasso.with(getContext()).load(image_url1).into(mImageViewP);
 
-            String image_url = Utility.buildImageUrl(500, mMovie.getImage());
+            String image_url = Utility.buildImageUrl(500, mFilme.getImage());
             Picasso.with(getContext()).load(image_url).into(mImageView);
 
-            mTitleView.setText(mMovie.getTitle());
-            mOverviewView.setText(mMovie.getOverview());
-            String movie_date = mMovie.getDate();
+            mTitulo.setText(mFilme.getTitle());
+            mSinopse.setText(mFilme.getOverview());
+            String movie_date = mFilme.getDate();
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 String date = DateUtils.formatDateTime(getActivity(),
                         formatter.parse(movie_date).getTime(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR);
-                mDateView.setText(date);
+                mDataLancamento.setText(date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            mVoteAverageView.setText(mMovie.getRating());
+            mVoteAverageView.setText(mFilme.getRating());
         }
 
         return rootView;
@@ -288,9 +284,9 @@ public class DetailActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (mMovie != null) {
-            new FetchTrailersTask().execute(Integer.toString(mMovie.getId()));
-            new FetchReviewsTask().execute(Integer.toString(mMovie.getId()));
+        if (mFilme != null) {
+            new FetchTrailersTask().execute(Integer.toString(mFilme.getId()));
+            new FetchReviewsTask().execute(Integer.toString(mFilme.getId()));
         }
     }
 
@@ -298,7 +294,7 @@ public class DetailActivityFragment extends Fragment {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, mMovie.getTitle() + " " +
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mFilme.getTitle() + " " +
                 "http://www.youtube.com/watch?v=" + mTrailer.getKey());
         return shareIntent;
     }

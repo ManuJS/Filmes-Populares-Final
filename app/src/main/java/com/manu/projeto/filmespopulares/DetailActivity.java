@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas;
+package com.manu.projeto.filmespopulares;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

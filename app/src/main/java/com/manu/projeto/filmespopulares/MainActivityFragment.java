@@ -1,4 +1,4 @@
-package com.manu.projeto.filmespiratas;
+package com.manu.projeto.filmespopulares;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -16,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.manu.projeto.filmespiratas.adapters.FilmesGridAdapter;
-import com.manu.projeto.filmespiratas.data.MovieContract;
-import com.manu.projeto.filmespiratas.model.Filme;
+import com.manu.projeto.filmespopulares.adapters.FilmesGridAdapter;
+import com.manu.projeto.filmespopulares.data.MovieContract;
+import com.manu.projeto.filmespopulares.model.Filme;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +51,7 @@ public class MainActivityFragment extends Fragment {
 
     private String mSortBy = POPULARITY_DESC;
 
-    private ArrayList<Filme> mMovies = null;
+    private ArrayList<Filme> mFilmes = null;
 
     private static final String[] MOVIE_COLUMNS = {
             MovieContract.MovieEntry._ID,
@@ -177,8 +177,8 @@ public class MainActivityFragment extends Fragment {
             }
 
             if (savedInstanceState.containsKey(MOVIES_KEY)) {
-                mMovies = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
-                mFilmesGridAdapter.setData(mMovies);
+                mFilmes = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
+                mFilmesGridAdapter.setData(mFilmes);
             } else {
                 updateMovies(mSortBy);
             }
@@ -202,8 +202,8 @@ public class MainActivityFragment extends Fragment {
         if (!mSortBy.contentEquals(POPULARITY_DESC)) {
             outState.putString(SORT_SETTING_KEY, mSortBy);
         }
-        if (mMovies != null) {
-            outState.putParcelableArrayList(MOVIES_KEY, mMovies);
+        if (mFilmes != null) {
+            outState.putParcelableArrayList(MOVIES_KEY, mFilmes);
         }
         super.onSaveInstanceState(outState);
     }
@@ -308,8 +308,8 @@ public class MainActivityFragment extends Fragment {
                 if (mFilmesGridAdapter != null) {
                     mFilmesGridAdapter.setData(movies);
                 }
-                mMovies = new ArrayList<>();
-                mMovies.addAll(movies);
+                mFilmes = new ArrayList<>();
+                mFilmes.addAll(movies);
             }
         }
     }
@@ -352,8 +352,8 @@ public class MainActivityFragment extends Fragment {
                 if (mFilmesGridAdapter != null) {
                     mFilmesGridAdapter.setData(movies);
                 }
-                mMovies = new ArrayList<>();
-                mMovies.addAll(movies);
+                mFilmes = new ArrayList<>();
+                mFilmes.addAll(movies);
             }
         }
     }

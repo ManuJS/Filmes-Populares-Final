@@ -1,10 +1,10 @@
-package com.manu.projeto.filmespiratas.model;
+package com.manu.projeto.filmespopulares.model;
 
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.manu.projeto.filmespiratas.MainActivityFragment;
+import com.manu.projeto.filmespopulares.MainActivityFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
